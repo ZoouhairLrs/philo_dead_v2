@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/08 18:58:57 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/10 00:34:54 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	*routine_yawmi(void *philo)
 		if (routine_activity(phil) == 1)
 			return (NULL);
 	}
-	// printf("id == %d is out\n", phil->id);
 	phil->nbr_eat_max = 1;
 	return (NULL);
 }
