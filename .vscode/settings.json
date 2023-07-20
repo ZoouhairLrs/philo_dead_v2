@@ -2,6 +2,8 @@
 	"files.associations": {
 		"__mutex_base": "c",
 		"__locale": "c",
-		"ios": "c"
+		"ios": "c",
+		"philo_bonus.h": "c",
+		"iterator": "c"
 	}
 }

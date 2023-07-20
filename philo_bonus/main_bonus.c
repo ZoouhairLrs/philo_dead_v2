@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:44:03 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 04:31:56 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 06:23:30 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philo.h"
+#include "include/philo_bonus.h"
 
 void	init_data(t_data *data, char **argv)
 {
@@ -52,37 +52,37 @@ void	free_all(t_philo *philo, int position)
 	i = 0;
 	while (i < position)
 	{
-		pthread_mutex_destroy(philo[i].fork.right);
-		free(philo[i].fork.right);
+		// pthread_mutex_destroy(philo[i].fork.right);
+		// free(philo[i].fork.right);
 		i++;
 	}
 	free(philo);
 }
 
-int	printf_fork_right(long ms, t_philo *phil, pthread_mutex_t *fork)
+int	printf_fork_right(long ms, t_philo *phil)
 {
-	if (phil->arguments->number_of_philosophers == 1)
-	{
-		while (1)
-		{
-			pthread_mutex_lock(&phil->arguments->mutex_arg);
-			if (phil->arguments->philo_is_dead == 1)
-			{
-				pthread_mutex_unlock(&phil->arguments->mutex_arg);
-				pthread_mutex_unlock(fork);
-				return (1);
-			}			
-			pthread_mutex_unlock(&phil->arguments->mutex_arg);
-		}
-	}
-	pthread_mutex_lock(fork);
-	pthread_mutex_lock(&phil->arguments->mutex_arg);
-	if (phil->arguments->philo_is_dead == 1)
-	{
-		pthread_mutex_unlock(&phil->arguments->mutex_arg);
-		pthread_mutex_unlock(fork);
-		return (1);
-	}
+	// if (phil->arguments->number_of_philosophers == 1)
+	// {
+	// 	while (1)
+	// 	{
+	// 		pthread_mutex_lock(&phil->arguments->mutex_arg);
+	// 		if (phil->arguments->philo_is_dead == 1)
+	// 		{
+	// 			pthread_mutex_unlock(&phil->arguments->mutex_arg);
+	// 			pthread_mutex_unlock(fork);
+	// 			return (1);
+	// 		}			
+	// 		pthread_mutex_unlock(&phil->arguments->mutex_arg);
+	// 	}
+	// }
+	sem_wait(phil->arguments->forks);
+	sem_wait(phil->arguments->sem_arg);
+	// if (phil->arguments->philo_is_dead == 1)
+	// {
+	// 	pthread_mutex_unlock(&phil->arguments->mutex_arg);
+	// 	pthread_mutex_unlock(fork);
+	// 	return (1);
+	// }
 	print_forkright(phil, ms);
 	return (0);
 }

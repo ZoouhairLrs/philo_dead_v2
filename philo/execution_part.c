@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:55:41 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/19 03:51:19 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 04:39:43 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ t_philo	*create_philo(t_data data)
 	{
 		if (pthread_mutex_init(&philo[i].mutex, NULL) != 0)
 			return (printf("error inistialisation mutex..!\n"),
-				free(philo), NULL);
+				destroy_all(philo, i), free(philo), NULL);
 		philo[i].fork.right = malloc(sizeof(pthread_mutex_t));
 		if (!philo[i].fork.right)
-			return (free_all(philo, i), NULL);
+			return (destroy_all(philo, i), free_all(philo, i), NULL);
 		if (pthread_mutex_init(philo[i].fork.right, NULL) != 0)
 			return (printf("error inistialisation mutex..!\n"),
-				free_all(philo, i), NULL);
+				destroy_all(philo, i), free_all(philo, i), NULL);
 		i++;
 	}
 	i = 0;
@@ -92,6 +92,7 @@ int	execution_part(t_data data)
 	philo = create_philo(data);
 	if (!philo)
 		return (0);
+	destroy_all(philo, data.arguments->number_of_philosophers);
 	free_all(philo, data.arguments->number_of_philosophers);
 	return (1);
 }

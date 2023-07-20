@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:43:08 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 04:38:44 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 06:34:22 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>
 # include <stdio.h>
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 # define EAT "is eating"
 # define SLEEP "is sleeping"
@@ -38,30 +39,25 @@ typedef struct s_argumrnts
 	int				number_phil_to_eat;
 	int				number_of_times_each_philosopher_must_eat;
 	int				philo_is_dead;
-	pthread_mutex_t	mutex_arg;
+	sem_t			*sem_arg;
+	sem_t			*forks;
 	long			time;
 }	t_arguments;
 
 // t_argument = t_input
 
-typedef struct s_fork
-{
-	pthread_mutex_t	*right;
-	pthread_mutex_t	*left;
-}	t_fork;
 
 typedef struct s_philo
 {
-	pthread_t		thread;
+	int				pid_philo;
 	int				id;
 	long			philo_dead;
 	long			last_eat;
 	int				nb_eat;
 	int				nbr_eat_max;
 	long			new_time;
-	t_fork			fork;
 	t_arguments		*arguments;
-	pthread_mutex_t	mutex;
+	sem_t			*sem;
 }	t_philo;
 
 typedef struct s_data
@@ -86,7 +82,10 @@ void	*routine_yawmi(void *philo);
 void	free_all(t_philo *philo, int position);
 void	init_forks(t_philo *philo, t_data data, int i);
 void	print_forkright(t_philo *phil, long ms);
-int		printf_fork_right(long ms, t_philo *phil, pthread_mutex_t *fork);
+int		printf_fork_right(long ms, t_philo *phil);
 void	destroy_all(t_philo *philo, int position);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char const *s1, char const *s2);
+
 
 #endif
