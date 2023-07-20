@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exicution_part.c                                   :+:      :+:    :+:   */
+/*   execution_part.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:55:41 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/08 19:21:12 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:51:19 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	manage_threads(t_philo *philo, t_data *data)
 	i = 0;
 	while (i < data->arguments->number_of_philosophers)
 	{
-		thread = pthread_create(&philo[i].thread, NULL, &routine_yawmi, &philo[i]);
+		thread = pthread_create(&philo[i].thread, NULL,
+				&routine_yawmi, &philo[i]);
 		if (thread != 0)
 		{
 			printf ("Error...about creating threaeds!\n");
-			return;
+			return ;
 		}
 		i++;
 	}
@@ -36,24 +37,8 @@ void	manage_threads(t_philo *philo, t_data *data)
 	}
 }
 
-t_philo	*create_philo(t_data data)
+void	init_forks(t_philo *philo, t_data data, int i)
 {
-	t_philo *philo;
-	int i;
-
-	i = 0;
-	philo = malloc(sizeof(t_philo) * data.arguments->number_of_philosophers);
-	if (!philo)
-		return (0);
-	while (i < data.arguments->number_of_philosophers)
-	{
-		if (pthread_mutex_init(&philo[i].mutex, NULL) != 0)
-			return (printf("error about problem inistialisation mutex..!\n"), NULL);
-		philo[i].fork.right = malloc(sizeof(pthread_mutex_t));
-		pthread_mutex_init(philo[i].fork.right, NULL);
-		i++;
-	}
-	i = 0;
 	while (i < data.arguments->number_of_philosophers)
 	{
 		philo[i].id = i + 1;
@@ -68,18 +53,45 @@ t_philo	*create_philo(t_data data)
 			philo[i].fork.left = philo[i + 1].fork.right;
 		i++;
 	}
+}
+
+t_philo	*create_philo(t_data data)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * data.arguments->number_of_philosophers);
+	if (!philo)
+		return (0);
+	while (i < data.arguments->number_of_philosophers)
+	{
+		if (pthread_mutex_init(&philo[i].mutex, NULL) != 0)
+			return (printf("error inistialisation mutex..!\n"),
+				free(philo), NULL);
+		philo[i].fork.right = malloc(sizeof(pthread_mutex_t));
+		if (!philo[i].fork.right)
+			return (free_all(philo, i), NULL);
+		if (pthread_mutex_init(philo[i].fork.right, NULL) != 0)
+			return (printf("error inistialisation mutex..!\n"),
+				free_all(philo, i), NULL);
+		i++;
+	}
+	i = 0;
+	init_forks(philo, data, i);
 	manage_threads(philo, &data);
 	return (philo);
 }
 
 int	execution_part(t_data data)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	if (pthread_mutex_init(&data.arguments->mutex_arg, NULL) != 0)
-			return (printf("error about problem inistialisation mutex..!\n"), 0);
+		return (printf("error about problem inistialisation mutex..!\n"), 0);
 	philo = create_philo(data);
 	if (!philo)
 		return (0);
+	free_all(philo, data.arguments->number_of_philosophers);
 	return (1);
 }

@@ -6,42 +6,49 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/10 00:34:54 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:57:38 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
+int	print_dead(t_philo *philo, long ms)
+{
+	pthread_mutex_unlock(&philo->mutex);
+	pthread_mutex_lock(&philo->arguments->mutex_arg);
+	philo->philo_dead = 1;
+	if (philo->arguments->philo_is_dead == 1)
+	{
+		pthread_mutex_unlock(&philo->arguments->mutex_arg);
+		return (1);
+	}			
+	philo->arguments->philo_is_dead = 1;
+	ms = get_time() - (philo->arguments->time);
+	printf("%lu %d %s\n", ms, philo->id, DIED);
+	pthread_mutex_unlock(&philo->arguments->mutex_arg);
+	return (1);
+}
+
 void	*if_stamina(void *phil)
 {
 	t_philo	*philo;
 	long	ms;
-	
+
+	ms = 0;
 	philo = (t_philo *)phil;
 	while (philo->philo_dead != 1)
 	{
 		pthread_mutex_lock(&philo->mutex);
-		if((get_time() - philo->new_time) >= (philo->arguments->time_to_die))
+		if ((get_time() - philo->new_time) >= (philo->arguments->time_to_die))
 		{
-			pthread_mutex_unlock(&philo->mutex);
-			pthread_mutex_lock(&philo->arguments->mutex_arg);
-			philo->philo_dead = 1;
-			if (philo->arguments->philo_is_dead == 1)
-			{
-				pthread_mutex_unlock(&philo->arguments->mutex_arg);
-				break ;	
-			}			
-			philo->arguments->philo_is_dead = 1;
-			ms = get_time() - (philo->arguments->time);
-			printf("%lu %d %s\n", ms, philo->id, DIED);
-			pthread_mutex_unlock(&philo->arguments->mutex_arg);
-			break;
+			if (print_dead(philo, ms) == 1)
+				break ;
 		}
 		else if (philo->nbr_eat_max == 1)
 		{
 			philo->arguments->number_phil_to_eat += 1;
 			pthread_mutex_unlock(&philo->mutex);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->mutex);
 		usleep(100);
@@ -52,7 +59,7 @@ void	*if_stamina(void *phil)
 void	*routine_yawmi(void *philo)
 {
 	int			i;
-	t_philo 	*phil;
+	t_philo		*phil;
 	pthread_t	th_id;
 
 	i = 0;

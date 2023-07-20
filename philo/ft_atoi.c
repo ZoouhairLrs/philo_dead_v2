@@ -6,11 +6,9 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:02:58 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/08 16:03:02 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:08:55 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "include/philo.h"
 
@@ -40,7 +38,7 @@ static void	sign_in(char const *str, int *i, int *sign)
 		(*i)++;
 }
 
-long	 ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int			i;
 	int			sign;
@@ -52,16 +50,18 @@ long	 ft_atoi(const char *str)
 	i = 0;
 	space(str, &i);
 	sign_in(str, &i, &sign);
-	while (ft_isdigit(str[i]) && str[i])
+	while (str[i] != '\0')
 	{
+		if (!ft_isdigit(str[i]))
+			return (0);
 		previous_result = result;
 		result = previous_result * 10;
-		if (result / 10 != previous_result || (sign == 1 && result > 2147483647))
-			return (more_max_int);
-		else if (result / 10 != previous_result || (sign == -1 && result > 2147483647))
-			return (more_max_int);
+		if (result / 10 != previous_result)
+			return (MAXINT);
 		result += (str[i] - '0');
 		i++;
 	}
+	if (result > 2147483647)
+		return (MAXINT);
 	return (sign * result);
 }
