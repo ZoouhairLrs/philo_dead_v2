@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:20:54 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 06:28:53 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 08:27:07 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,7 @@ void	ft_us_sleep(unsigned int t, t_philo *philo)
 	start = get_time();
 	(void)philo;
 	while (get_time() - start < t)
-	{
-		// pthread_mutex_lock(&philo->arguments->mutex_arg);
-		// if (philo->arguments->philo_is_dead == 1)
-		// {
-		// 	pthread_mutex_unlock(&philo->arguments->mutex_arg);
-		// 	return ;
-		// }
-		// pthread_mutex_unlock(&philo->arguments->mutex_arg);
 		usleep(50);
-	}
 }
 
 void	print_forkright(t_philo *phil, long ms)
@@ -58,6 +49,18 @@ void	destroy_all(t_philo *philo, int position)
 	while (i < position)
 	{
 		sem_close(philo[i].sem);
+		i++;
+	}
+}
+
+void	ft_kill_all(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->arguments->number_of_philosophers)
+	{
+		kill(philo[i].pid_philo, SIGKILL);
 		i++;
 	}
 }

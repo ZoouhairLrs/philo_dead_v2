@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:43:08 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 06:34:22 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 08:27:53 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define EAT "is eating"
 # define SLEEP "is sleeping"
@@ -45,7 +46,6 @@ typedef struct s_argumrnts
 }	t_arguments;
 
 // t_argument = t_input
-
 
 typedef struct s_philo
 {
@@ -86,6 +86,6 @@ int		printf_fork_right(long ms, t_philo *phil);
 void	destroy_all(t_philo *philo, int position);
 char	*ft_itoa(int n);
 char	*ft_strjoin(char const *s1, char const *s2);
-
+void	ft_kill_all(t_philo *philo);
 
 #endif

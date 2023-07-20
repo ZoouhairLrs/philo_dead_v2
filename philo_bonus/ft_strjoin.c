@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 05:07:26 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 06:30:35 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 08:28:42 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcat(str + (s1_len), s2, s2_len + 1);
 	return (str);
 }
-
-

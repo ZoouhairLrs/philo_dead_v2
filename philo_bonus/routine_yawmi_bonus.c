@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 06:37:30 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/20 08:28:21 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 int	print_dead(t_philo *philo, long ms)
 {
-	pthread_mutex_unlock(&philo->mutex);
-	pthread_mutex_lock(&philo->arguments->mutex_arg);
+	sem_post(philo->sem);
+	sem_wait(philo->arguments->sem_arg);
 	philo->philo_dead = 1;
-	if (philo->arguments->philo_is_dead == 1)
-	{
-		pthread_mutex_unlock(&philo->arguments->mutex_arg);
-		return (1);
-	}			
 	philo->arguments->philo_is_dead = 1;
 	ms = get_time() - (philo->arguments->time);
 	printf("%lu %d %s\n", ms, philo->id, DIED);
-	pthread_mutex_unlock(&philo->arguments->mutex_arg);
 	return (1);
 }
 
@@ -38,19 +32,13 @@ void	*if_stamina(void *phil)
 	philo = (t_philo *)phil;
 	while (philo->philo_dead != 1)
 	{
-		pthread_mutex_lock(&philo->mutex);
-		if ((get_time() - philo->new_time) >= (philo->arguments->time_to_die))
+		sem_wait(philo->sem);
+		if ((get_time() - philo->new_time) > (philo->arguments->time_to_die))
 		{
 			if (print_dead(philo, ms) == 1)
-				break ;
+				exit(0);
 		}
-		else if (philo->nbr_eat_max == 1)
-		{
-			philo->arguments->number_phil_to_eat += 1;
-			pthread_mutex_unlock(&philo->mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->mutex);
+		sem_post(philo->sem);
 		usleep(100);
 	}
 	return (NULL);
