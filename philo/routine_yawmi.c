@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/19 03:57:38 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/21 03:41:17 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,25 @@ void	*routine_yawmi(void *philo)
 	phil->nb_eat = 0;
 	phil->nbr_eat_max = 0;
 	phil->philo_dead = 0;
+	pthread_mutex_lock(&phil->arguments->mutex_arg);
 	phil->arguments->philo_is_dead = 0;
+	pthread_mutex_unlock(&phil->arguments->mutex_arg);
 	phil->nb_eat = 0;
 	if (phil->id % 2 == 0)
-		usleep(500);
+		usleep(200);
 	pthread_create(&th_id, NULL, &if_stamina, phil);
 	pthread_detach(th_id);
-	while (phil->arguments->philo_is_dead != 1)
+	while (1)
 	{
+		pthread_mutex_lock(&phil->arguments->mutex_arg);
+		if (phil->arguments->philo_is_dead == 1)
+			break;
+		pthread_mutex_unlock(&phil->arguments->mutex_arg);
 		if (routine_activity(phil) == 1)
 			return (NULL);
 	}
+	pthread_mutex_lock(&phil->arguments->mutex_arg);
 	phil->nbr_eat_max = 1;
+	pthread_mutex_unlock(&phil->arguments->mutex_arg);
 	return (NULL);
 }

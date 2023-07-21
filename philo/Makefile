@@ -6,7 +6,7 @@
 #    By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 15:42:30 by zlaarous          #+#    #+#              #
-#    Updated: 2023/07/20 03:55:45 by zlaarous         ###   ########.fr        #
+#    Updated: 2023/07/21 03:37:52 by zlaarous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC		=	./main.c \
 OBJS	=	$(SRC:.c=.o)
 
 %.o: 		%.c $(HEADER)
-			@${CC} ${FLAGS}  -c $< -o $@
+			@${CC} ${FLAGS} -c $< -o $@
 
 $(NAME) :	$(OBJS)
 			@$(CC) $(OBJS) -o $(NAME)

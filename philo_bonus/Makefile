@@ -6,11 +6,11 @@
 #    By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 15:42:30 by zlaarous          #+#    #+#              #
-#    Updated: 2023/07/20 06:37:02 by zlaarous         ###   ########.fr        #
+#    Updated: 2023/07/21 03:44:24 by zlaarous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 	=	philo
+NAME 	=	philo_bonus
 CC		=	cc
 FLAGS	=	-Wall -Wextra -Werror
 HEADER	=	./include/philo_bonus.h
