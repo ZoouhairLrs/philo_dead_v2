@@ -6,7 +6,7 @@
 #    By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 15:42:30 by zlaarous          #+#    #+#              #
-#    Updated: 2023/07/21 03:44:24 by zlaarous         ###   ########.fr        #
+#    Updated: 2023/07/21 04:41:40 by zlaarous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER	=	./include/philo_bonus.h
 SRC		=	./main_bonus.c \
 			./ft_atoi_bonus.c \
 			./execution_part_bonus.c \
-			./routine_yawmi_bonus.c \
+			./routine_philos_bonus.c \
 			./routine_activity_bonus.c \
 			./setup_timing_bonus.c \
 			./ft_itoa.c \

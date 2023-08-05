@@ -6,7 +6,7 @@
 #    By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 15:42:30 by zlaarous          #+#    #+#              #
-#    Updated: 2023/07/21 03:37:52 by zlaarous         ###   ########.fr        #
+#    Updated: 2023/07/21 04:55:42 by zlaarous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADER	=	./include/philo.h
 SRC		=	./main.c \
 			./ft_atoi.c \
 			./execution_part.c \
-			./routine_yawmi.c \
+			./routine_philos.c \
 			./routine_activity.c \
 			./setup_timing.c \
 			

@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:55:41 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 08:47:45 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/21 04:41:40 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	manage_threads(t_philo *philo, t_data *data)
 	{
 		philo[i].pid_philo = fork();
 		if (philo[i].pid_philo == 0)
-			routine_yawmi(&philo[i]);
+			routine_philos(&philo[i]);
 		i++;
 	}
 	i = 0;

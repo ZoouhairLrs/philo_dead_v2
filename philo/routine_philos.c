@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_yawmi.c                                    :+:      :+:    :+:   */
+/*   routine_philos.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/21 03:41:17 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/26 00:45:46 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,26 @@ void	*if_stamina(void *phil)
 	return (NULL);
 }
 
-void	*routine_yawmi(void *philo)
+void	initialization(t_philo *phil, int *i)
+{
+	*i = 0;
+	phil->nb_eat = 0;
+	phil->nbr_eat_max = 0;
+	phil->philo_dead = 0;
+	phil->nb_eat = 0;
+	phil->arguments->philo_is_dead = 0;
+}
+
+void	*routine_philos(void *philo)
 {
 	int			i;
 	t_philo		*phil;
 	pthread_t	th_id;
 
-	i = 0;
 	phil = (t_philo *)philo;
-	phil->nb_eat = 0;
-	phil->nbr_eat_max = 0;
-	phil->philo_dead = 0;
 	pthread_mutex_lock(&phil->arguments->mutex_arg);
-	phil->arguments->philo_is_dead = 0;
+	initialization (phil, &i);
 	pthread_mutex_unlock(&phil->arguments->mutex_arg);
-	phil->nb_eat = 0;
 	if (phil->id % 2 == 0)
 		usleep(200);
 	pthread_create(&th_id, NULL, &if_stamina, phil);
@@ -79,7 +84,7 @@ void	*routine_yawmi(void *philo)
 	{
 		pthread_mutex_lock(&phil->arguments->mutex_arg);
 		if (phil->arguments->philo_is_dead == 1)
-			break;
+			break ;
 		pthread_mutex_unlock(&phil->arguments->mutex_arg);
 		if (routine_activity(phil) == 1)
 			return (NULL);

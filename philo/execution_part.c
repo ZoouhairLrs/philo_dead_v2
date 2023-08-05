@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:55:41 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 04:39:43 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/21 04:41:40 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	manage_threads(t_philo *philo, t_data *data)
 	while (i < data->arguments->number_of_philosophers)
 	{
 		thread = pthread_create(&philo[i].thread, NULL,
-				&routine_yawmi, &philo[i]);
+				&routine_philos, &philo[i]);
 		if (thread != 0)
 		{
 			printf ("Error...about creating threaeds!\n");

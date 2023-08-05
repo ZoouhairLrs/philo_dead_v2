@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_yawmi_bonus.c                              :+:      :+:    :+:   */
+/*   routine_philos_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:58:28 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 08:28:21 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/21 04:57:39 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*if_stamina(void *phil)
 	return (NULL);
 }
 
-void	*routine_yawmi(void *philo)
+void	*routine_philos(void *philo)
 {
 	int			i;
 	t_philo		*phil;

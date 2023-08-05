@@ -6,7 +6,7 @@
 /*   By: zlaarous <zlaarous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:43:08 by zlaarous          #+#    #+#             */
-/*   Updated: 2023/07/20 04:38:44 by zlaarous         ###   ########.fr       */
+/*   Updated: 2023/07/21 04:41:41 by zlaarous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ long	get_time(void);
 void	manage_threads(t_philo *philo, t_data *data);
 void	ft_us_sleep(unsigned int t, t_philo *philo);
 int		routine_activity(t_philo *phil);
-void	*routine_yawmi(void *philo);
+void	*routine_philos(void *philo);
 void	free_all(t_philo *philo, int position);
 void	init_forks(t_philo *philo, t_data data, int i);
 void	print_forkright(t_philo *phil, long ms);
